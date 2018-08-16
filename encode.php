@@ -38,7 +38,7 @@ $root = dirname ( __FILE__ );
 
 set_include_path ( '/var/www/virtual/lustre/shared-libraries/Smarty' . PATH_SEPARATOR . $root . '/includes' . PATH_SEPARATOR . $root . '/config' . PATH_SEPARATOR . get_include_path () );
 
-include ('ATK_Database.php');
+include ('Database.php');
 
 //Load our INI file
 $loadini = parse_ini_file ( 'queue.ini' );
@@ -68,7 +68,7 @@ if (file_exists ( $touch_file )) {
 	
 	//load ffmpeg extension
 	if (! extension_loaded ( "ffmpeg" )) {
-		dl ( $extension_soname ) or error ( "Can’t load extension $extension_fullname", true );
+		dl ( $extension_soname ) or error ( "Canâ€™t load extension $extension_fullname", true );
 	}
 	//Query our first file in the queue
 	$query = "Select model_id, photog, setid, type, filename from process_queue where processed <> '1' and returned <> '1' order by date_ent limit 1";
@@ -84,7 +84,7 @@ if (file_exists ( $touch_file )) {
 	$filename = 'dul001ROK_219839001.wmv';
 	*/
 	//Query model's site name
-	$model_query = "SELECT atk_name from models where model_id = '$model_id';";
+	$model_query = "SELECT name from models where model_id = '$model_id';";
 	echo 'Model Query: '.$model_query."\r";
 	$model_name = $mdb->queryOne ( $model_query );
 	echo $model_name."\r";
@@ -127,9 +127,9 @@ if (file_exists ( $touch_file )) {
 	foreach ( $formats as $foo ) {
 		$pid = pcntl_fork ();
 		if ($pid == - 1) {
-			$to = "helpdesk@atkcash.com";
-			$subject = "ATKMovies.com Encode Fork Failure";
-			$body = "The Movie Encoding process for ATKMovies has failed.";
+			$to = "email@sample.com";
+			$subject = "Encode Fork Failure";
+			$body = "The Movie Encoding process failed.";
 			if (mail ( $to, $subject, $body )) {
 				echo ("<p>Message successfully sent!</p>");
 			} else {
